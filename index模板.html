@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+<link rel="stylesheet" href="css/normalize.css"><!-- 格式化css -->
+<link rel="stylesheet" href="plug-in/TouchSlide1.1-00/touchslide.css"><!-- 轮播图 -->
+<link rel="stylesheet" href="css/all.css"><!-- 全局通用css库 -->
+<link rel="stylesheet" href="css/css.css"><!-- 所有的自定义css -->
+<title></title>
+</head>
+<body>
+
+	<!--
+		loading图片，页面加载完毕后会自动删除
+		进入时，all_boss是默认隐藏的，
+		当allobj.init()执行完毕后，会删除loading，使all_boss出现	
+	-->
+	<img class="all_loading" src="img/loading.gif">
+	
+	<!-- 
+		必须有一个all_boss包裹所有内容
+		这里采用了盒模型布局，经典的三明治结构
+	-->
+	<div class="all_boss all_box_s">
+		<div class="all_head all_flexs">头部</div>
+		<div class="all_body all_flex1">
+			<!-- 
+				轮播图插件布局
+			 -->
+			<div id="slideBox" class="slideBox">
+				<div class="bd">
+					<ul>
+						<li>
+							<a class="pic" href="#"><img src="img/test/1b.jpg" /></a>
+							<a class="tit all_b" href="#">文字说明</a>
+						</li>
+						<li>
+							<a class="pic" href="#"><img src="img/test/2b.jpg" /></a>
+							<a class="tit" href="#">文字说明</a>
+						</li>
+						<li>
+							<a class="pic" href="#"><img src="img/test/1b.jpg" /></a>
+							<a class="tit" href="#">文字说明</a>
+						</li>
+					</ul>
+				</div>
+				<div class="hd">
+					<ul></ul>
+				</div>
+			</div>
+			<!-- /轮播图 -->
+			
+			<!-- 
+				通用tab选项卡插件布局
+				选中的按钮会自动加上.check
+				选中的页会自动加上.all_block
+				具体样式请自行书写
+			-->
+			<div class="u_tabs">
+				<ul class="u_tabsmenu">
+					<li class="u_tabsop check" data-page="1">11111</li>
+					<li class="u_tabsop" data-page="2">2222</li>
+				</ul>
+				<ul class="u_info">
+					<li class="u_tabspage all_block" data-page="1">1111</li>
+					<li class="u_tabspage" data-page="2">2222</li>
+				</ul>
+			</div>
+			<!-- /选项卡 -->
+			
+			<!-- 表单验证基本布局 -->
+			<!--
+				.locheck包含全部表单元素
+				.lodiv包含一个表单元素
+				.lodiv中的.loisok和.loisno代表正确的提示和错误的提示
+			-->
+			<div class="locheck">
+				<div class="lodiv">
+					<input type="text" class="lo_int" data-isok="0">
+					<div class="loisok">正确</div>
+					<div class="loisno">错误</div>
+				</div>
+				<button id="btn1" onClick="allobj.lobegincheck(this)">提交表单，一次性全部验证</button>
+			</div>
+			
+			<!-- 多项被点击效果（单选） -->
+			<div class="u_dian">
+				<div class="dian">1</div>
+				<div class="dian">2</div>
+				<div class="dian">3</div>
+				<div class="dian">4</div>
+			</div>
+			<!-- 多项被点击效果(多选) -->
+			<div class="u_dian">
+				<div class="dian_duo">1</div>
+				<div class="dian_duo">2</div>
+				<div class="dian_duo">3</div>
+				<div class="dian_duo">4</div>
+			</div>
+			
+			<!-- 多项被点击效果(最多选2个) -->
+			<div class="u_dian">
+				<div class="dian_2">1</div>
+				<div class="dian_2">2</div>
+				<div class="dian_2">3</div>
+				<div class="dian_2">4</div>
+			</div>
+			
+			<!-- 
+				包装的选择框基本样式
+				单选框多选框都可以
+				这是纯CSS实现的，听说在苹果手机和三星手机测试不兼容
+				在PC端是很好的，所以不推荐在手机上用这种
+				
+				单选框可在label上加superradio，可取消单选框选择(仅用于radio)
+				自行调整尺寸
+			 -->
+			<label class="all_label all_clear superradio" for="r1">
+				<input id="r1" type="radio" name="ra1">
+				<div class="all_label_imgbox">
+					<img class="all_label_normal" src="img/check_no.png">
+					<img class="all_label_check" src="img/check.png">
+				</div>
+				<div class="all_label_info">文字说明</div>
+			</label>
+			
+			<!--
+				以JS实现的包装选择框
+				如果需要可取消选择，在div上加superradio_js(仅用于radio)
+			-->
+			<div class="all_label_js all_clear">
+				<input type="radio" name="ra">
+				<div class="all_label_imgbox">
+					<img class="all_label_normal" src="img/check_no.png">
+					<img class="all_label_check" src="img/check.png">
+				</div>
+				<div class="all_label_info">文字说明1</div>
+			</div>
+			<div class="all_label_js all_clear">
+				<input type="radio" name="ra">
+				<div class="all_label_imgbox">
+					<img class="all_label_normal" src="img/check_no.png">
+					<img class="all_label_check" src="img/check.png">
+				</div>
+				<div class="all_label_info">文字说明2</div>
+			</div>
+			<div class="all_label_js all_clear">
+				<input type="radio" name="ra">
+				<div class="all_label_imgbox">
+					<img class="all_label_normal" src="img/check_no.png">
+					<img class="all_label_check" src="img/check.png">
+				</div>
+				<div class="all_label_info">文字说明3</div>
+			</div>
+			<hr/>
+			
+			<!-- 
+				获取手机验证码效果
+				data-alltime为倒计时时间，如果并设置，默认为60秒
+			-->
+			<button class="all_markbtn" data-alltime="5">获取验证码</button>
+			
+			<!-- 滚动监听导航 -->
+			<!--
+				滚动到中间的页面，其导航会添加check类
+				自己写样式
+			-->
+			<div class="u_nav" style="position:fixed;top:50%;left:20px;">
+				<a href="javascript:;" class="u_navb check" data-p="1">1</a>
+				<a href="javascript:;" class="u_navb" data-p="2">1</a>
+				<a href="javascript:;" class="u_navb" data-p="3">1</a>
+				<a href="javascript:;" class="u_navb" data-p="4">1</a>
+			</div>
+			<div class="u_sec">
+				<section class="u_secp" data-p="1" style="height:500px;">1</section>
+			
+				<section class="u_secp" data-p="2" style="height:500px;">2</section>
+			
+				<section class="u_secp" data-p="3" style="height:500px;">3</section>
+			
+				<section class="u_secp" data-p="4" style="height:500px;">4</section>
+			</div>
+		</div>
+		<div class="all_foot all_flexs">底部</div>
+	</div>
+	
+	<!-- 模态框 基本布局 -->
+	<div class="all_model all_model_close">
+		<div class="all_model_box">
+			<div class="all_model_head">
+				<span>标题</span>
+				<a class="all_model_closebtn all_model_close" href="javascript:;">X</a>
+			</div>
+			<div class="all_model_body all_b">自定义内容</div>
+			<div class="all_model_foot"></div>
+		</div>
+	</div>
+	
+				
+	<script src="js/jquery-2.1.4.min.js"></script>
+	<script src="plug-in/TouchSlide1.1-00/TouchSlide.1.1.js"></script><!-- 轮播图 -->
+	<script src="js/all.js"></script>
+	<script>
+		$(function(){
+			//头部轮播图初始化
+			TouchSlide({ 
+				slideCell:"#slideBox",
+				titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				mainCell:".bd ul", 
+				effect:"leftLoop", 
+				autoPage:true,//自动分页
+				autoPlay:true //自动播放
+			});	
+			//模态框测试
+			allobj.modelShow();
+
+		});
+	</script> 
+</body>
+</html>
+

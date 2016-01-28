@@ -1,0 +1,6 @@
+/* 测试滚动监听菜单的check样式 */
+.u_nav .check{background-color:#f00;color:#fff;}
+
+/* u_dian效果测试 */
+.u_dian .dian,.u_dian .dian_duo,.u_dian .dian_2{width:50px;height:20px;border:solid 1px #ccc;text-align:center;line-height:20px;}
+.u_dian .check{background-color:#f00;color:#fff;}
