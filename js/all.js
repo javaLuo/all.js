@@ -320,6 +320,56 @@
 				},1000);
 			}
 		},
+		/* -- 小时倒计时 -- */
+		//h:小时
+		//m:分钟
+		//s:秒钟
+		//t:某个元素，程序将把剩余的时间数显示在此元素中
+		//callback:时间到0时的回调函数
+		hToZero:function(h,m,s,t,callback) 
+		{ 
+			if(!m){
+				m=0;	
+			}
+			if(!s){
+				s=0;	
+			}
+			
+			h = parseFloat(h);
+			m = parseFloat(m);
+			s = parseInt(s);
+			
+			var time = parseInt(h*60*60+m*60+s);
+			h = parseInt(time/(60*60));
+			m = parseInt((time-h*60*60)/60);
+			s = parseInt(time-h*60*60-m*60);
+			s--;
+			if(s<0){
+				m--;
+				if(m<0){
+					h--;
+					m=59;	
+				}
+				s=59;
+			}
+			
+			if(s<10){s="0"+s;}
+			if(m<10){m="0"+m;}
+			if(h<10){h="0"+h;}
+			
+			$(t).text(h+"时"+m+"分"+s+"秒");
+			
+			if(h<=0 && m<=0 && parseInt(s)<=0){
+				if(callback){
+					callback();	
+				}
+				return;	
+			}else{
+				setTimeout(function(){
+					allobj.hToZero(h,m,s,t,callback);
+				},1000);
+			}
+		},
 		/* -- 天数倒计时 -- */
 		//day:天数
 		//h:小时
@@ -433,7 +483,7 @@
 			$p.find(".lo_int,.lo_phone,.lo_nonull,.lo_pwd,.lo_pwdr,.lo_email,.lo_yzm").trigger("keyup");
 			$p.find(".lo_checked").trigger("change");
 			
-			var $temp = $p.find("input[data-isok='0']");
+			var $temp = $p.find(".lonopass");
 			if($temp.length<=0){
 				return true;	
 			}else{
@@ -539,11 +589,11 @@
 		if(isok){
 			$p.find(".loisok").removeClass("all_none");
 			$p.find(".loisno").addClass("all_none");
-			$t.data("isok","1");
+			$t.removeClass("lonopass");
 		}else{
 			$p.find(".loisok").addClass("all_none");
 			$p.find(".loisno").removeClass("all_none");
-			$t.data("isok","0");
+			$t.addClass("lonopass");
 		}
 	}
 	
