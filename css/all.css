@@ -1,16 +1,42 @@
 /* 通用库 */
 
 /* 全局配置 */
-body{margin:0;padding:0;background-color:#fff;color:#222;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing: grayscale;-ms-touch-action: manipulation;touch-action: manipulation;-webkit-touch-callout:none;font-family: "Microsoft YaHei",Arial, sans-serif;font-size:.25rem;}
+*{
+	-webkit-overflow-scrolling: touch;			/* 允许独立滚动区域，解决IOS上的非body元素滚动条滚动时卡顿 */
+	-webkit-tap-highlight-color: transparent;	/* 覆盖IOS上用户点击连接时的默认高亮颜色 */
+	-webkit-touch-callout:none;					/* 禁用系统默认菜单，相当于禁用右键菜单 */
+	-webkit-user-select: none;					/* 文本不能被选择，不是禁用复制粘贴 */
+	user-select: none;
+	outline: none;
+}
+body{
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	color:#222;
+	-webkit-font-smoothing:antialiased;			/* 平滑字体 */
+	-moz-osx-font-smoothing: grayscale;			/* 平滑字体 */
+	-ms-touch-action: manipulation;				/* 允许触摸驱动的平移和拖拽缩放 */
+	touch-action: manipulation;					/* 允许触摸驱动的平移和拖拽缩放 */
+	-webkit-text-size-adjust:100%;				/* 关闭IOS横屏时，自动调整字体大小的功能 */
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+	font-size:.25rem;
+}
 div,ul,li{position:relative;display:block;}			/* 全部都是相对定位 */
 ul{margin:0;padding:0;}								/* ul相当于div */
 li{list-style:none;margin:0;padding:0;}				/* li相当于div */
-img,a,input,select,textarea,button{outline:none;}	/* 没有外边框  */
-img,span{vertical-align:middle;}
-a:focus,a:hover{outline:none;}
+img,span{vertical-align:middle;border:0;}
+input{line-height:normal;}
+input,textarea{-webkit-user-select:text;user-select:text;}/* 表单元素的文本可以被选择 */
+a:focus,a:hover,a:active{outline:none;}
 a{text-decoration:none;}
 button{cursor:pointer;padding:0 !important;}
 label{cursor:pointer;}
+sub,sup{font-size:75%;line-height: 0;position: relative;vertical-align: baseline;} /* 重新定义上标和下标的表现 */
+sup{top: -.5em;}
+sub{bottom: -.25em;}
+table{border-spacing: 0;border-collapse: collapse;} /* 边框合并为单一的边框 */
+td,th{padding: 0;}
 
 /* 所有页面都应该套在此div中,有利于解决body滚动条无法人为控制的问题 */
 .all_boss{position:relative;width:100%;max-width:640px;min-height:100vh;height:auto;margin:0 auto;visibility:hidden;}
