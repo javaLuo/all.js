@@ -39,56 +39,6 @@
 				$(".all_box_s").addClass("all_flex_s").removeClass("all_box_s");	
 			}
 			
-			/*============================
-			
-				所有按钮的hover 效果
-				在任意元素上加上all_btn类，则当按下时，其背景颜色变暗50%；
-				
-			============================*/
-			$(".all_btn").on("touchstart",function(){
-				var $t = $(this);
-				if(!$t.hasClass("all_touchstartnow")){
-					$t.addClass("all_touchstartnow");
-					var c = $t.css("background-color");
-					var regexp = /[0-9]{0,3}/g;  
-					var re = c.match(regexp);
-					for(var i=0;i<re.length;i++){
-						if(!re[i]){
-							re.splice(i,1);
-							i--;
-						}
-					}
-	
-					var r = parseInt(re[0]);
-					var g = parseInt(re[1]);
-					var b = parseInt(re[2]);
-	
-					$t.css("background-color","rgb("+parseInt(r/2)+","+parseInt(g/2)+","+parseInt(b/2)+")");
-				}
-				
-			}).on("touchmove touchend",function(){
-				var $t = $(this);
-				if($t.hasClass("all_touchstartnow")){
-					$t.removeClass("all_touchstartnow");
-	
-					var c = $t.css("background-color");
-	
-					var regexp = /[0-9]{0,3}/g;  
-					var re = c.match(regexp);
-					for(var i=0;i<re.length;i++){
-						if(!re[i]){
-							re.splice(i,1);
-							i--;
-						}
-					}
-	
-					var r = re[0]*2>255?255:(re[0]*2);
-					var g = re[1]*2>255?255:(re[1]*2);
-					var b = re[2]*2>255?255:(re[2]*2);
-	
-					$t.css("background-color","rgb("+r+","+g+","+b+")");
-				}
-			});
 			
 			/*============================
 			
@@ -134,7 +84,36 @@
 			
 			/*============================
 			
+				通用tab选项卡插件(有动画效果)
+			
+			============================*/
+			$(".u_tabshand .u_tabsop").on("click",function(){
+				var $t = $(this);
+				var $p = $t.parents(".u_tabshand");
+				
+				var page = $t.data("page");
+	
+				var pageold = $(".u_tabshand .u_tabsop.check").data("page");
+				if(page == pageold){return;}
+				var thefx = "margin-left";
+				$p.find(".u_tabsop").removeClass("check");
+				$p.find(".u_tabspage").css("display","none");
+				$t.addClass("check");
+				
+				if(page>pageold){//即将出现的page在pageold的右边，应该左移动
+					$p.find(".u_tabspage[data-page='"+page+"']").css({"margin":"0","left":"0"}).css("margin-left",".5rem").stop().animate({"margin-left":"0","opacity":"show"},200);
+				}
+				else{//即将出现的page在pageold的左边，应该右移动
+					$p.find(".u_tabspage[data-page='"+page+"']").css({"margin":"0","left":"0"}).css("left","-.5rem").stop().animate({"left":"0","opacity":"show"},200);
+				}
+				
+				$p.find(".u_tabline").css("left",$t.position().left+"px");
+			});
+			
+			/*============================
 				多个选项点选效果，可取消
+				不用touchend是因为 在一个按钮上按下，手指移动到另一个按钮放开，仍然会触发touchend
+				全用click,引入fastclick.js
 				
 			============================*/
 			
@@ -232,6 +211,7 @@
 				全部初始化完毕，显示页面
 				
 			============================*/
+			$("img").attr("draggable","false");
 			$(".all_boss").css("visibility","visible");
 			$(".all_loading").remove();
 		},
@@ -448,6 +428,93 @@
 					smoothScroll($secp);
 				}
 			});
+		},
+		/*
+			全屏遮罩提示
+			可用于ajax时锁屏
+			a:需提示的文字
+			b:持续时间，如果为空，表示不会消失
+		*/
+		sToast:function(a,b){
+			if(a){
+				$(".all_stoast>div>div").text(a);
+			}else{
+				$(".all_stoast>div>div").text("请稍后...");
+			}
+			
+			$(".all_stoast").fadeIn(300);
+			if(b){
+				setTimeout(function(){
+					$(".all_stoast").stop().fadeOut(300);	
+				},b);	
+			}
+		},
+		sToastHide:function(){
+			$(".all_stoast").stop().fadeOut(300);
+		},
+		/*
+			图片预加载
+			a:图片完整路径
+			b:元素ID 或 元素本身
+			如果页面中的img直接使用懒加载，可能此时allobj还没有被加载，将报错
+			这种方法适合ajax加载的图片
+			或者用手动加载的方法：imglazeload2();
+			用手动加载的图片应该是这样的：<img class="all_lazeimg" src="nothing.png" data-src="真实图片路径">
+			不要用onload=...
+		*/
+		imglazeload:function(a,b){
+			var img=new Image();
+			var t;
+			if(typeof(b) == "object"){
+				t = $(b);	
+			}else{
+				t = $("#"+b);	
+			}
+			//加载完毕时触发
+			img.onload = function(){
+				img.onload = null;
+				t.css({"background-image":"none","background-color":"transparent"}).attr("src",this.src);
+				img = null;
+			}
+			
+			//加载出错时触发
+			img.onerror = function(){
+				img = null;
+			}
+			
+			img.src=a;
+
+			//如果图片已经加载成功 则直接返回
+			if(img.complete){
+				//img = null; 如果已有缓存 此处直接就为true,但还没有执行img.onload方法，浏览器再执行img.onload
+				return;
+			}
+		
+		},
+		/*
+			手动启动图片预加载
+			在页面加载完毕后调用allobj.imglazeload2();
+			将找到所有.all_lazeimg，这些元素上如果有data-src属性，则会被懒加载
+		*/
+		imglazeload2:function(){
+			$(".all_lazeimg").each(function(index, element) {
+				var src = $(element).data("src");
+				if(src){
+					allobj.imglazeload(src,element);
+				}
+			});	
+		},
+		/* rem to px */
+		rem2px:function(a){
+			return parseFloat($("html").css("font-size"))*a;
+		},
+		/*
+			生成两个数之间的随机正整数
+			min:最小数
+			max:最大数
+		*/
+		random:function(min,max){
+			return Math.floor(Math.random()*(max-min+1)+min);
 		},
 		/* -- 表单验证初始化 -- */
 		//需要将容器div设置为class="locheck"

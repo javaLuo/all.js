@@ -39,13 +39,16 @@ table{border-spacing: 0;border-collapse: collapse;} /* 边框合并为单一的�
 td,th{padding: 0;}
 
 /* 所有页面都应该套在此div中,有利于解决body滚动条无法人为控制的问题 */
-.all_boss{position:relative;width:100%;max-width:640px;min-height:100vh;height:auto;margin:0 auto;visibility:hidden;}
+.all_boss{position:relative;width:100%;max-width:6.4rem;min-height:6.4rem;height:100vh;margin:0 auto;visibility:hidden;background-color:#fff;overflow:hidden;}
+.all_boss2{position:relative;width:100%;max-width:6.4rem;min-height:100vh;margin:0 auto;visibility:hidden;background-color:#f2f2f2;}/* 可变高度 */
+.all_footer{width:100%;height:1.5rem;}
+.all_footer2{position:fixed;width:6.4rem;height:1.5rem;bottom:0;left:50%;margin-left:-3.2rem;background-color:#f2f2f2;}
 
 /* flex盒模型 */
 .all_flex_h{display:flex;display:-webkit-flex;flex-flow:row nowrap;}		/* 弹性盒子：横向 */
 .all_flex_s{display:flex;display:-webkit-flex;flex-flow:column nowrap;}		/* 弹性盒子：竖向 */
-.all_flex_h .all_flex1,.all_flex_s .all_flex1{flex:auto;}					/* 弹性盒子：1等分 */
-.all_flex_h .all_flexs,.all_flex_s .all_flexs{flex-shrink:0;}
+.all_flex_h .all_flex1,.all_flex_s .all_flex1{flex:auto;}			/* 弹性盒子：1等分 */
+.all_flex_h .all_flexs,.all_flex_s .all_flexs{flex-shrink:0;}			/* 固定高度的div应设置此css */
 
 /* box盒模型 */
 .all_box_h{display:box;display:-webkit-box;box-orient:horizontal;-webkit-box-orient:horizontal;}	/* 弹性盒子：横向 */
@@ -64,8 +67,10 @@ td,th{padding: 0;}
 .all_b{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;}	/* 内框模式 */
 .all_clear:after{content:".";height:0;visibility:hidden;display:block;clear:both;}
 .all_block{display:block !important;}
+.all_inblock{display:inline-block !important;}
 .all_inline{display:inline !important;}
 .all_none{display:none !important;}
+.all_hide{visibility:hidden !important;}
 .all_tl{text-align:left;}
 .all_tc{text-align:center;}
 .all_tr{text-align:right;}
@@ -73,6 +78,17 @@ td,th{padding: 0;}
 .all_overauto{overflow:auto;}
 .all_table{width:100%;}
 .all_table tr td{padding:.2rem;}
+.all_mauto{margin:0 auto;}
+.all_vbase{vertical-align:baseline !important;}
+.all_vmid{vertical-align:middle !important;}
+.all_zw068{width:100%;height:.68rem;}
+.all_zw088{width:100%;height:.88rem;}
+.all_zw15{width:100%;height:1.5rem;}
+.all_zw0{width:100%;height:1px;}
+.all_zw02{width:100%;height:.2rem;}
+.all_active{-webkit-transition:background-color 200ms;transition:background-color 200ms;}
+.all_active:active{background-color:#f2f2f2 !important;}
+.all_lazeimg{background-image:url(../img/loading.gif);background-position:center;background-repeat:no-repeat;background-size:.5rem .5rem;}/* 懒加载图片默认样式 */
 
 .all_mt0{margin-top:0 !important;}
 .all_mt01{margin-top:.1rem !important;}
@@ -181,31 +197,20 @@ td,th{padding: 0;}
 .all_f15{font-size:1.5rem !important;}
 .all_f2{font-size:2rem !important;}
 
-/* 
-	通用按钮
-	在js中加了touch事件，按下时颜色变暗50%
-*/
-.all_btn{position:relative;display:inline-block;border:none;text-align:center;letter-spacing:1px;border-radius:.1rem;}
 
-/* 手机端不存在hover,所以没有加hover */
-.all_btn_r{background-color:#f00;color:#fff;}
-
-.all_btn_w2h1{width:2rem;height:1rem;line-height:1rem;}
-
-
-/* loading插件样式 */
-.all_loading{position:fixed;z-index:999;width:.5rem;height:.5rem;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);}
+/* loading插件样式 此时还没有字体适配，所以单位用px*/
+.all_loading{position:fixed;z-index:999;width:25px;height:25px;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);}
 
 /* toast插件样式 */
 .all_toast{position:fixed;top:52%;left:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);padding:.25rem;border-radius:.15rem;background-color:#222;font-size:.25rem;line-height:1rem;color:#fff;max-width:100%;}
 
 /* 模态框插件样式 */
 .all_model{position:fixed;z-index:900;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);display:none;}
-.all_model_box{position:absolute;top:50%;left:50%;background-color:#fff;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);border-radius:.1rem;box-shadow:0 0 .7rem #000;max-width:6.4rem;max-height:100vh;}
-.all_model_box .all_model_head{height:1rem;line-height:1rem;border-bottom:solid 1px #ccc;min-width:2rem;padding-left:.2rem;border-top-left-radius:.15rem;border-top-right-radius:.15rem;}
-.all_model_box .all_model_body{max-height:12rem;overflow:auto;padding:.15rem;}
-.all_model_box .all_model_closebtn{display:block;float:right;width:1rem;height:1rem;text-align:center;line-height:1rem;color:#f00;}
-.all_model_box .all_model_foot{min-height:.15rem;border-bottom-left-radius:.15rem;border-bottom-right-radius:.15rem;}
+.all_model .all_model_box{position:absolute;top:50%;left:50%;background-color:#fff;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);border-radius:.1rem;box-shadow:0 0 .7rem #000;max-width:6.4rem;max-height:100vh;}
+.all_model .all_model_box .all_model_head{height:1rem;line-height:1rem;border-bottom:solid 1px #ccc;min-width:2rem;padding-left:.2rem;border-top-left-radius:.15rem;border-top-right-radius:.15rem;}
+.all_model .all_model_box .all_model_body{max-height:12rem;overflow:auto;padding:.15rem;}
+.all_model .all_model_box .all_model_closebtn{display:block;float:right;width:1rem;height:1rem;text-align:center;line-height:1rem;color:#f00;}
+.all_model .all_model_box .all_model_foot{min-height:.15rem;border-bottom-left-radius:.15rem;border-bottom-right-radius:.15rem;}
 
 /* 通用tabs插件样式 */
 .u_tabs .u_info .u_tabspage{display:none;}
@@ -236,3 +241,8 @@ td,th{padding: 0;}
 
 /* 通用手机验证码按钮倒计时效果 */
 .all_markbtn.marking{background-color:#888 !important;color:#fff !important;}
+/* 全屏遮罩提示框 */
+.all_stoast{position:fixed;width:100%;height:100%;top:0;left:0;z-index:100;display:none;}
+.all_stoast>div{position:absolute;top:50%;left:50%;min-width:1.5rem;min-height:1.5rem;max-width:5rem;padding:.15rem;border-radius:.1rem;background-color:rgba(0,0,0,.8);word-break:break-all;word-wrap:break-word;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);}
+.all_stoast>div>img{width:.8rem;height:.8rem;display:block;margin:0 auto;}
+.all_stoast>div>div{text-align:center;font-size:.24rem;color:#fff;margin-top:.1rem;}

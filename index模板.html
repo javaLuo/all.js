@@ -2,8 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black"><!-- 苹果标题栏的背景颜色 默认就是black; black-translucent 半透明的黑色 -->
+<meta name="format-detection" content="telephone=no"><!-- 阻止苹果将数字解析为电话号码 -->
+<meta name="apple-mobile-web-app-capable" content="yes"><!-- 禁用苹果的系统菜单 -->
+
 <link rel="stylesheet" href="css/normalize.css"><!-- 格式化css -->
 <link rel="stylesheet" href="plug-in/TouchSlide1.1-00/touchslide.css"><!-- 轮播图 -->
 <link rel="stylesheet" href="css/all.css"><!-- 全局通用css库 -->
@@ -198,6 +202,8 @@
 		</div>
 	</div>
 	
+	<!-- 图片懒加载 -->
+	<img class="all_lazeimg" style="width:250px;height:250px;" id="lazeimg_{id}" src="img/nothing.png" onload="allobj.imglazeload(\'{imgpath}\',\'lazeimg_{id}\')">
 				
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="plug-in/TouchSlide1.1-00/TouchSlide.1.1.js"></script><!-- 轮播图 -->
